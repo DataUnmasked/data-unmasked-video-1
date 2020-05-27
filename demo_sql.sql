@@ -1,0 +1,92 @@
+CREATE SCHEMA IF NOT EXISTS video_1;
+CREATE TABLE IF NOT EXISTS video_1.nrc_event_notification_report 
+( 
+  event_desc TEXT,
+  en_no TEXT,
+  site_name TEXT,
+  licensee_name TEXT,
+  region_no TEXT,
+  city_name TEXT,
+  state_cd TEXT,
+  county_name TEXT,
+  license_no TEXT,
+  agreement_state_ind TEXT,
+  docket_no TEXT,
+  unit_ind1 TEXT,
+  unit_ind2 TEXT,
+  unit_ind3 TEXT,
+  reactor_type TEXT,
+  nrc_notified_by TEXT,
+  ops_officer TEXT,
+  notification_dt TEXT,
+  notification_time TEXT,
+  event_dt TEXT,
+  event_time TEXT,
+  time_zone TEXT,
+  last_updated_dt TEXT,
+  emergency_class TEXT,
+  cfr_cd1 TEXT,
+  cfr_descr1 TEXT,
+  cfr_cd2 TEXT,
+  cfr_descr2 TEXT,
+  cfr_cd3 TEXT,
+  cfr_descr3 TEXT,
+  cfr_cd4 TEXT,
+  cfr_descr4 TEXT,
+  staff_name1 TEXT,
+  org_abbrev1 TEXT,
+  staff_name2 TEXT,
+  org_abbrev2 TEXT,
+  staff_name3 TEXT,
+  org_abbrev3 TEXT,
+  staff_name4 TEXT,
+  org_abbrev4 TEXT,
+  staff_name5 TEXT,
+  org_abbrev5 TEXT,
+  staff_name6 TEXT,
+  org_abbrev6 TEXT,
+  staff_name7 TEXT,
+  org_abbrev7 TEXT,
+  staff_name8 TEXT,
+  org_abbrev8 TEXT,
+  staff_name9 TEXT,
+  org_abbrev9 TEXT,
+  staff_name10 TEXT,
+  org_abbrev10 TEXT,
+  scram_code_1 TEXT,
+  rx_crit_1 TEXT,
+  initial_pwr_1 TEXT,
+  initial_rx_mode1 TEXT,
+  current_pwr_1 TEXT,
+  current_rx_mode_1 TEXT,
+  scram_code_2 TEXT,
+  rx_crit_2 TEXT,
+  initial_pwr_2 TEXT,
+  initial_rx_mode_2 TEXT,
+  current_pwr_2 TEXT,
+  current_rx_mode_2 TEXT,
+  scram_code_3 TEXT,
+  rx_crit_3 TEXT,
+  initial_pwr_3 TEXT,
+  initial_rx_mode_3 TEXT,
+  current_pwr_3 TEXT,
+  current_rx_mode_3 TEXT,
+  event_text TEXT,
+  unused_column TEXT
+);
+
+COPY video_1.nrc_event_notification_report
+FROM '/home/vagrant/data-unmasked-video-1/event-notification-rpt-lastmonth.txt' 
+DELIMITER '|' CSV HEADER QUOTE '~' ESCAPE '/';
+
+SELECT * FROM video_1.nrc_event_notification_report;
+
+SELECT 
+  region_no, 
+  state_cd, 
+  site_name, 
+  emergency_class, 
+  count(*) AS event_count 
+FROM video_1.nrc_event_notification_report 
+GROUP BY region_no, state_cd, site_name, emergency_class 
+ORDER BY region_no, state_cd, site_name, emergency_class;
